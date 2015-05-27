@@ -15,37 +15,41 @@ Interface complience is checked during class creation and you usually only need 
 
 In the following code, the `Hamburger` class is incorrectly defining the `cook` method (the default value for temperature is missing) and an exception is thrown during import.
 
-    from interface import interface, implements
+```python
+from interface import interface, implements
+
+class Comestible(interface):
+    def eat(self): pass
+    def buy_from(self, supermarket): pass
+    def mix_with(self, *ingredients): pass
+    def cook_with(self, **ingredients): pass
+    def cook(self, temperature=100): pass
+
+@implements(Comestible)
+class Hamburger(object):
     
-    class Comestible(interface):
-      def eat(self): pass
-      def buy_from(self, supermarket): pass
-      def mix_with(self, *ingredients): pass
-      def cook_with(self, **ingredients): pass
-      def cook(self, temperature=100): pass
-    
-    @implements(Comestible)
-    class Hamburger(object):
-      
-      def eat(self):
+    def eat(self):
+        pass
+
+    def buy_from(self, supermarket):
         pass
     
-      def buy_from(self, supermarket):
+    def mix_with(self, *ingredients):
         pass
-        
-      def mix_with(self, *ingredients):
+    
+    def cook_with(self, **ingredients):
         pass
-      
-      def cook_with(self, **ingredients):
+    
+    def cook(self, temperature):
         pass
-      
-      def cook(self):
-        pass
+```
 
 This is what the exception looks like:
 
-    NotImplementedError: Class 'Hamburger' must implement method 'cook(self, temperature=100)' 
-    defined in interface 'Comestible'.
+```
+NotImplementedError: Class 'Hamburger' must implement method 
+'cook(self, temperature=100)' defined in interface 'Comestible'.
+```
 
 # Todo
 
