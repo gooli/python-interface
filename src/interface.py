@@ -10,7 +10,9 @@ def implements(interface):
         for name, method in inspect.getmembers(interface, lambda v: hasattr(v, 'im_class')):
             contract = inspect.getargspec(method)
             impl = getattr(clazz, name, None)
-            signature = inspect.getargspec(impl) if impl else None
+            signature = None
+            if impl and type(impl) != type(object.__init__):
+                signature = inspect.getargspec(impl) if impl else None
             if signature != contract:
                 raise NotImplementedError("Class '{}' must implement method '{}({})' defined in interface '{}'.".format(
                     clazz.__name__, name, _argspec_to_string(contract), interface.__name__

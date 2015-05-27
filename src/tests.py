@@ -136,5 +136,16 @@ class TestCase(unittest.TestCase):
                 def foo(self):
                     pass
 
+    def test_bad_constructor(self):
+        class FooInterface(interface):
+            def __init__(self, a):
+                pass
+
+        with self.assertRaises(NotImplementedError):
+            @implements(FooInterface)
+            class FooImplementation(object):
+                def __init__(self):
+                    pass
+
 if __name__ == '__main__':
     unittest.main()
