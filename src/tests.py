@@ -10,8 +10,6 @@ class TestCase(unittest.TestCase):
         class FooImplementation(object):
             pass
 
-        foo = FooImplementation()
-
     def test_complex(self):
         class FooInterface(interface):
             def foo(self, a, b=7, *args, **kwargs):
@@ -22,7 +20,17 @@ class TestCase(unittest.TestCase):
             def foo(self, a, b=7, *args, **kwargs):
                 pass
 
-        foo = FooImplementation()
+    def test_propery(self):
+        class FooInterface(interface):
+            @property
+            def foo(self):
+                pass
+
+        @implements(FooInterface)
+        class FooImplementation(object):
+            @property
+            def foo(self):
+                pass
 
     def test_missing_method(self):
         class FooInterface(interface):
@@ -97,6 +105,34 @@ class TestCase(unittest.TestCase):
         with self.assertRaises(NotImplementedError):
             @implements(FooInterface)
             class FooImplementation(object):
+                def foo(self):
+                    pass
+
+    def test_missing_property(self):
+        class FooInterface(interface):
+            @property
+            def foo(self):
+                pass
+
+        with self.assertRaises(NotImplementedError):
+            @implements(FooInterface)
+            class FooImplementation(object):
+                pass
+
+    def test_missing_set_property(self):
+        class FooInterface(interface):
+            @property
+            def foo(self):
+                pass
+
+            @foo.setter
+            def foo(self, value):
+                pass
+
+        with self.assertRaises(NotImplementedError):
+            @implements(FooInterface)
+            class FooImplementation(object):
+                @property
                 def foo(self):
                     pass
 
